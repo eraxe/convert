@@ -24,18 +24,31 @@ def txt_to_po(txt_file):
     while i < len(lines):
         line = lines[i].strip()
         if line:
-            msgid, msgstr = line.split(" -> ")
-            entry = polib.POEntry(msgid=msgid, msgstr=msgstr)
+            if " -> " in line:
+                msgid, msgstr = line.split(" -> ")
+                entry = polib.POEntry(msgid=msgid, msgstr=msgstr)
 
-            # Handle plural forms
-            if i + 1 < len(lines) and lines[i + 1].startswith("%d"):
-                i += 1
-                plural_line = lines[i].strip()
-                msgid_plural, msgstr_plural = plural_line.split(" -> ")
-                entry.msgid_plural = msgid_plural
-                entry.msgstr_plural = {0: msgstr, 1: msgstr_plural}
+                # Handle plural forms
+                if i + 1 < len(lines) and lines[i + 1].startswith("%d"):
+                    i += 1
+                    plural_line = lines[i].strip()
+                    plural_parts = plural_line.split(" -> ")
+                    msgid_plural = plural_parts[0][3:]
+                    msgstr_plural = plural_parts[1]
+                    entry.msgid_plural = msgid_plural
+                    entry.msgstr_plural = {0: msgstr, 1: msgstr_plural}
 
-            po.append(entry)
+                po.append(entry)
+            else:
+                # Handle lines with only plural forms
+                if line.startswith("%d"):
+                    msgid_plural = line[3:]
+                    msgstr_plural = ""
+                    entry = polib.POEntry(msgid="", msgstr="")
+                    entry.msgid_plural = msgid_plural
+                    entry.msgstr_plural = {0: msgstr_plural, 1: msgstr_plural}
+                    po.append(entry)
+
         i += 1
 
     with open(f"{txt_file}_output.po", "w") as po_file:
