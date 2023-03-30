@@ -5,11 +5,13 @@ def po_to_txt(po_file, txt_file):
 
     with open(txt_file, "w") as file:
         for entry in po:
-            if entry.msgid_plural:
-                file.write(f"{entry.msgid} -> {entry.msgstr[0]}\n")
-                file.write(f"%d{entry.msgid_plural} -> {entry.msgstr[1]}\n")
+            if entry.msgstr_plural:
+                msgstr = entry.msgstr_plural.get(1, "")
             else:
-                file.write(f"{entry.msgid} -> {entry.msgstr}\n")
+                msgstr = entry.msgstr
+            file.write(f"{entry.msgid} -> {msgstr}\n")
+
+
 
 
 def txt_to_po(txt_file, output_file=None):
