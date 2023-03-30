@@ -7,12 +7,11 @@ def po_to_txt(input_filepath: str, output_filepath: str):
             txt_file.write(f"{entry.msgid} -> {entry.msgstr}\n")
             if entry.msgid_plural:
                 txt_file.write(f"{entry.msgid_plural} -> ")
-                for index, msgstr_plural in enumerate(entry.msgstr_plural):
+                for index, msgstr_plural in enumerate(entry.msgstr_plural.values()):
                     if index > 0:
                         txt_file.write(", ")
                     txt_file.write(f"{index}: {msgstr_plural}")
                 txt_file.write("\n")
-
 
 def txt_to_po(txt_file):
     with open(txt_file, "r") as file:
