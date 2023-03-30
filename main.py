@@ -6,5 +6,5 @@ from send.router import router as send_router
 app = FastAPI()
 
 app.include_router(get_router, prefix="/get", tags=["get"])
-app.include_router(convert_router, prefix="/convert", tags=["convert"])
+app.include_router(convert_router)
 app.include_router(send_router, prefix="/send", tags=["send"])

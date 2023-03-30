@@ -1,0 +1,5 @@
+Let’s make the web multilingual. -> Machen wir das Internet mehrsprachig.
+We connect developers and translators around the globe on Lingohub for a fantastic localization experience. -> Wir verbinden Entwickler mit Übersetzern weltweit auf Lingohub für ein fantastisches Lokalisierungs-Erlebnis.
+Welcome back, %1$s! Your last visit was on %2$s -> Willkommen zurück, %1$s! Dein letzter Besuch war am %2$s
+%d page read. -> 
+%d pages read. -> 0: Eine Seite gelesen wurde., 1: %d Seiten gelesen wurden.
