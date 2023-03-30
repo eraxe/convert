@@ -1,14 +1,18 @@
 import polib
 
-def po_to_txt(po_file):
-    po = polib.pofile(po_file)
-    with open(f"{po_file}_output.txt", "w") as txt_file:
+def po_to_txt(input_filepath: str, output_filepath: str):
+    po = polib.pofile(input_filepath)
+    with open(output_filepath, "w", encoding="utf-8") as txt_file:
         for entry in po:
+            txt_file.write(f"{entry.msgid} -> {entry.msgstr}\n")
             if entry.msgid_plural:
-                txt_file.write(f"{entry.msgid} -> {entry.msgstr[0]}\n")
-                txt_file.write(f"{entry.msgid_plural} -> {entry.msgstr[1]}\n")
-            else:
-                txt_file.write(f"{entry.msgid} -> {entry.msgstr}\n")
+                txt_file.write(f"{entry.msgid_plural} -> ")
+                for index, msgstr_plural in enumerate(entry.msgstr_plural):
+                    if index > 0:
+                        txt_file.write(", ")
+                    txt_file.write(f"{index}: {msgstr_plural}")
+                txt_file.write("\n")
+
 
 def txt_to_po(txt_file):
     with open(txt_file, "r") as file:
